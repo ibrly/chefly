@@ -1,5 +1,4 @@
-import type { StorybookConfig } from "@storybook/nextjs";
-import path from "path";
+import type { StorybookConfig } from "@storybook/nextjs-vite";
 
 const config: StorybookConfig = {
   stories: [
@@ -11,16 +10,12 @@ const config: StorybookConfig = {
     "@storybook/addon-a11y",
   ],
   framework: {
-    name: "@storybook/nextjs",
+    name: "@storybook/nextjs-vite",
     options: {},
   },
   staticDirs: ["../public"],
   core: {
     disableTelemetry: true,
-  },
-  typescript: {
-    check: false,
-    reactDocgen: false,
   },
 };
 
