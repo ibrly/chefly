@@ -52,6 +52,8 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          DATABASE_URL: postgresql://chefly:test_password@localhost:5432/chefly_test
 
       - name: Generate Prisma Client
         run: |
