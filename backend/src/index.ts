@@ -1,4 +1,3 @@
-import type { Core } from '@strapi/strapi';
 import bootstrap from './bootstrap';
 
 export default {
