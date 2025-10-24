@@ -44,27 +44,43 @@ class ErrorBoundary extends React.Component<
 }
 
 export default function RootLayout() {
-  console.log('RootLayout loaded');
+  console.log('========== RootLayout loaded ==========');
   
+  // SIMPLIFIED VERSION - NO PROVIDERS FOR DEBUGGING
   return (
-    <ErrorBoundary>
-      <SafeAreaProvider>
-        <QueryClientProvider client={queryClient}>
-          <PaperProvider>
-            <AuthProvider>
-              <NotificationProvider>
-                <SocketProvider>
-                  <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="(auth)" />
-                    <Stack.Screen name="(tabs)" />
-                  </Stack>
-                </SocketProvider>
-              </NotificationProvider>
-            </AuthProvider>
-          </PaperProvider>
-        </QueryClientProvider>
-      </SafeAreaProvider>
-    </ErrorBoundary>
+    <View style={{ flex: 1, backgroundColor: 'blue' }}>
+      <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', marginTop: 50 }}>
+        ROOT LAYOUT WORKS!
+      </Text>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="test" />
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+      </Stack>
+    </View>
   );
+  
+  // ORIGINAL VERSION WITH ALL PROVIDERS (COMMENTED OUT FOR DEBUGGING)
+  // return (
+  //   <ErrorBoundary>
+  //     <SafeAreaProvider>
+  //       <QueryClientProvider client={queryClient}>
+  //         <PaperProvider>
+  //           <AuthProvider>
+  //             <NotificationProvider>
+  //               <SocketProvider>
+  //                 <Stack screenOptions={{ headerShown: false }}>
+  //                   <Stack.Screen name="(auth)" />
+  //                   <Stack.Screen name="(tabs)" />
+  //                 </Stack>
+  //               </SocketProvider>
+  //             </NotificationProvider>
+  //           </AuthProvider>
+  //         </PaperProvider>
+  //       </QueryClientProvider>
+  //     </SafeAreaProvider>
+  //   </ErrorBoundary>
+  // );
 }
 
