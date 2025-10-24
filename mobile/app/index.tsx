@@ -5,23 +5,45 @@ import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 export default function Index() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+  console.log('Index component started');
+  
+  let user = null;
+  let loading = true;
+  let router: any = null;
 
-  console.log('Index page loaded:', { user, loading, platform: Platform.OS });
+  try {
+    const auth = useAuth();
+    user = auth.user;
+    loading = auth.loading;
+    console.log('Auth loaded:', { user, loading });
+  } catch (error) {
+    console.error('Auth error:', error);
+  }
+
+  try {
+    router = useRouter();
+    console.log('Router loaded');
+  } catch (error) {
+    console.error('Router error:', error);
+  }
+
+  console.log('Index page state:', { user, loading, platform: Platform.OS });
 
   // If user is logged in, redirect to their dashboard
   if (user && !loading) {
+    console.log('Redirecting to tabs');
     return <Redirect href="/(tabs)" />;
   }
 
   // On mobile, redirect to welcome screen
   if (Platform.OS !== 'web' && !loading) {
+    console.log('Redirecting to welcome');
     return <Redirect href="/(auth)/welcome" />;
   }
 
   // Show loading spinner while checking auth
   if (loading) {
+    console.log('Showing loading spinner');
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.loadingText}>Loading...</Text>
@@ -29,6 +51,8 @@ export default function Index() {
     );
   }
 
+  console.log('Rendering landing page');
+  
   // Landing page for web
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
