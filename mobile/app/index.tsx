@@ -2,10 +2,13 @@ import { Redirect, useRouter } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
 import { View, Text, ScrollView, StyleSheet, Pressable, Platform } from 'react-native';
 import { Button } from 'react-native-paper';
+import React from 'react';
 
 export default function Index() {
   const { user, loading } = useAuth();
   const router = useRouter();
+
+  console.log('Index page loaded:', { user, loading, platform: Platform.OS });
 
   // If user is logged in, redirect to their dashboard
   if (user && !loading) {

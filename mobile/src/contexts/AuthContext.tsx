@@ -27,14 +27,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log('AuthProvider mounted');
     loadUser();
   }, []);
 
   const loadUser = async () => {
     try {
+      console.log('Loading user...');
       const token = await AsyncStorage.getItem('auth_token');
+      console.log('Token found:', !!token);
+      
       if (token) {
         const response = await apiClient.get('/auth/me');
+        console.log('User loaded:', response.data);
         if (response.data.success) {
           setUser(response.data.data);
         } else {
@@ -46,6 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await AsyncStorage.removeItem('auth_token');
       await AsyncStorage.removeItem('refresh_token');
     } finally {
+      console.log('Loading complete, setting loading to false');
       setLoading(false);
     }
   };
