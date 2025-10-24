@@ -47,14 +47,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await apiClient.post('/auth/local', {
-        identifier: email,
+      const response = await apiClient.post('/auth/login', {
+        email,
         password,
       });
 
-      const { jwt, user: userData } = response.data;
-      await AsyncStorage.setItem('auth_token', jwt);
-      setUser(userData);
+      const { data } = response.data;
+      await AsyncStorage.setItem('auth_token', data.accessToken);
+      await AsyncStorage.setItem('refresh_token', data.refreshToken);
+      setUser(data.user);
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -63,16 +64,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (email: string, password: string, username: string, role: string) => {
     try {
-      const response = await apiClient.post('/auth/local/register', {
+      const response = await apiClient.post('/auth/register', {
         email,
         password,
         username,
         role,
       });
 
-      const { jwt, user: userData } = response.data;
-      await AsyncStorage.setItem('auth_token', jwt);
-      setUser(userData);
+      const { data } = response.data;
+      await AsyncStorage.setItem('auth_token', data.accessToken);
+      await AsyncStorage.setItem('refresh_token', data.refreshToken);
+      setUser(data.user);
     } catch (error) {
       console.error('Registration failed:', error);
       throw error;
