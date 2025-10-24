@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+coverage
+.expo
+.strapi
+*.log
+.DS_Store
+.env
+.env.*
+public/uploads
+backend/.cache
+backend/build
+backend/public/uploads
+mobile/.expo
+mobile/dist
+

@@ -1,0 +1,36 @@
+{
+  "name": "chefly",
+  "version": "1.0.0",
+  "description": "Chef marketplace platform - connecting chefs with clients",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter mobile dev & pnpm --filter backend develop",
+    "dev:mobile": "pnpm --filter mobile dev",
+    "dev:backend": "pnpm --filter backend develop",
+    "build": "pnpm --filter mobile build && pnpm --filter backend build",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "test": "pnpm -r test",
+    "test:e2e": "pnpm --filter mobile test:e2e"
+  },
+  "keywords": [
+    "chef",
+    "marketplace",
+    "react-native",
+    "strapi",
+    "expo"
+  ],
+  "author": "Ebrahim Soliman",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "eslint": "^9.14.0",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}
+
