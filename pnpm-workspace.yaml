@@ -1,4 +1,6 @@
 packages:
   - 'mobile'
-  - 'backend'
+  - 'backend/gateway'
+  - 'backend/shared'
+  - 'backend/services/*'
 
