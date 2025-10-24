@@ -282,7 +282,7 @@ ebb56ee feat(mobile): initialize React Native Expo app with auth and tab navigat
    - Analytics and metrics
    - Chef approval workflow
 
-3. **Optimize for Web**
+2. **Optimize for Web**
    - Responsive design
    - Desktop layouts
    - Performance optimization
