@@ -40,7 +40,7 @@ export function ResponsiveContainer({
   );
 }
 
-const styles = StyleSheet.create({
+const containerStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
