@@ -34,12 +34,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const token = await AsyncStorage.getItem('auth_token');
       if (token) {
-        const response = await apiClient.get('/users/me');
-        setUser(response.data);
+        const response = await apiClient.get('/auth/me');
+        if (response.data.success) {
+          setUser(response.data.data);
+        } else {
+          throw new Error('Failed to load user');
+        }
       }
     } catch (error) {
       console.error('Failed to load user:', error);
       await AsyncStorage.removeItem('auth_token');
+      await AsyncStorage.removeItem('refresh_token');
     } finally {
       setLoading(false);
     }
@@ -84,6 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('auth_token');
+      await AsyncStorage.removeItem('refresh_token');
       setUser(null);
     } catch (error) {
       console.error('Logout failed:', error);
