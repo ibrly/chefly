@@ -22,35 +22,53 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [value, setValue] = useState('');
-    return <SearchBar value={value} onChange={setValue} />;
+    return <SearchBar {...args} value={value} onChange={setValue} />;
+  },
+  args: {
+    value: '',
+    onChange: () => {},
+    placeholder: 'Search chefs...',
   },
 };
 
 export const WithSearchButton: Story = {
-  render: () => {
+  render: (args) => {
     const [value, setValue] = useState('');
     return (
       <SearchBar
+        {...args}
         value={value}
         onChange={setValue}
         onSearch={() => alert(`Searching for: ${value}`)}
       />
     );
   },
+  args: {
+    value: '',
+    onChange: () => {},
+  },
 };
 
 export const WithPlaceholder: Story = {
-  render: () => {
+  render: (args) => {
     const [value, setValue] = useState('');
-    return <SearchBar value={value} onChange={setValue} placeholder="Search for chefs..." />;
+    return <SearchBar {...args} value={value} onChange={setValue} placeholder="Search for chefs..." />;
+  },
+  args: {
+    value: '',
+    onChange: () => {},
   },
 };
 
 export const WithValue: Story = {
-  render: () => {
+  render: (args) => {
     const [value, setValue] = useState('Italian chef');
-    return <SearchBar value={value} onChange={setValue} />;
+    return <SearchBar {...args} value={value} onChange={setValue} />;
+  },
+  args: {
+    value: 'Italian chef',
+    onChange: () => {},
   },
 };
