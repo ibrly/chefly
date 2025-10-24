@@ -1,0 +1,37 @@
+{
+  "name": "chefly-backend",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Chefly backend API powered by Strapi",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "lint": "eslint . --ext .js,.ts",
+    "format": "prettier --write \"**/*.{js,ts,json}\""
+  },
+  "dependencies": {
+    "@strapi/strapi": "5.6.0",
+    "@strapi/plugin-users-permissions": "5.6.0",
+    "@strapi/plugin-i18n": "5.6.0",
+    "@strapi/plugin-cloud": "5.6.0",
+    "better-sqlite3": "11.8.1",
+    "pg": "^8.13.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "strapi": {
+    "uuid": "chefly-marketplace"
+  }
+}
+
