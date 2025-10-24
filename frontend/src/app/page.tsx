@@ -2,11 +2,14 @@
 
 import { Button } from '@/components/atoms/Button';
 import { ChefCard } from '@/components/molecules/ChefCard';
+import { FeatureCard } from '@/components/molecules/FeatureCard';
 import { Navbar } from '@/components/organisms/Navbar';
+import { Hero } from '@/components/organisms/Hero';
+import { Footer } from '@/components/organisms/Footer';
 import { useAuth } from '@/contexts/AuthContext';
 import { chefsService } from '@/services/chefs';
 import { Chef } from '@/types';
-import { Clock, Search, Shield, Star } from 'lucide-react';
+import { Clock, Shield, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -37,66 +40,32 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Find Your Perfect Chef</h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              Book professional chefs for your home cooking needs
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/explore">
-                <Button size="lg" variant="secondary">
-                  <Search className="mr-2" size={20} />
-                  Explore Chefs
-                </Button>
-              </Link>
-              {!isAuthenticated && (
-                <Link href="/register">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="bg-transparent border-white text-white hover:bg-white hover:text-blue-600"
-                  >
-                    Get Started
-                  </Button>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
+      <Hero
+        title="Find Your Perfect Chef"
+        subtitle="Book professional chefs for your home cooking needs"
+        showSecondaryButton={!isAuthenticated}
+      />
 
       {/* Features Section */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-12">Why Choose Chefly?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                <Shield className="text-blue-600" size={32} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Verified Chefs</h3>
-              <p className="text-gray-600">
-                All our chefs are professionally verified and background-checked
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                <Star className="text-blue-600" size={32} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Top Rated</h3>
-              <p className="text-gray-600">Browse reviews and ratings from real customers</p>
-            </div>
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-                <Clock className="text-blue-600" size={32} />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Easy Booking</h3>
-              <p className="text-gray-600">
-                Book a chef in minutes with our simple booking process
-              </p>
-            </div>
+            <FeatureCard
+              icon={Shield}
+              title="Verified Chefs"
+              description="All our chefs are professionally verified and background-checked"
+            />
+            <FeatureCard
+              icon={Star}
+              title="Top Rated"
+              description="Browse reviews and ratings from real customers"
+            />
+            <FeatureCard
+              icon={Clock}
+              title="Easy Booking"
+              description="Book a chef in minutes with our simple booking process"
+            />
           </div>
         </div>
       </section>
@@ -147,11 +116,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-400">© 2024 Chefly. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

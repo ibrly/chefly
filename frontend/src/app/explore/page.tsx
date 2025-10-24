@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/atoms/Button';
 import { SearchBar } from '@/components/molecules/SearchBar';
+import { FilterPanel } from '@/components/molecules/FilterPanel';
 import { ChefGrid } from '@/components/organisms/ChefGrid';
 import { Navbar } from '@/components/organisms/Navbar';
 import { chefsService } from '@/services/chefs';
@@ -16,6 +17,9 @@ export default function ExplorePage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const [cuisineType, setCuisineType] = useState('all');
+  const [priceRange, setPriceRange] = useState('any');
+  const [rating, setRating] = useState('all');
 
   useEffect(() => {
     loadChefs();
@@ -74,42 +78,15 @@ export default function ExplorePage() {
           </div>
 
           {showFilters && (
-            <div className="mt-4 p-4 bg-white rounded-lg border border-gray-200">
-              <h3 className="font-semibold mb-3">Filters</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Cuisine Type
-                  </label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2">
-                    <option>All Cuisines</option>
-                    <option>Italian</option>
-                    <option>French</option>
-                    <option>Japanese</option>
-                    <option>Mediterranean</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Price Range
-                  </label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2">
-                    <option>Any Price</option>
-                    <option>Under $50/hr</option>
-                    <option>$50 - $100/hr</option>
-                    <option>$100+/hr</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
-                  <select className="w-full rounded-lg border border-gray-300 px-3 py-2">
-                    <option>All Ratings</option>
-                    <option>4.5+ Stars</option>
-                    <option>4.0+ Stars</option>
-                    <option>3.5+ Stars</option>
-                  </select>
-                </div>
-              </div>
+            <div className="mt-4">
+              <FilterPanel
+                cuisineType={cuisineType}
+                priceRange={priceRange}
+                rating={rating}
+                onCuisineChange={setCuisineType}
+                onPriceChange={setPriceRange}
+                onRatingChange={setRating}
+              />
             </div>
           )}
         </div>

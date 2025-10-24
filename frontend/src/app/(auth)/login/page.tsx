@@ -1,5 +1,6 @@
 'use client';
 
+import { Alert } from '@/components/atoms/Alert';
 import { Button } from '@/components/atoms/Button';
 import { Card } from '@/components/atoms/Card';
 import { Input } from '@/components/atoms/Input';
@@ -42,11 +43,7 @@ export default function LoginPage() {
 
         <Card>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
-                {error}
-              </div>
-            )}
+            {error && <Alert type="error" message={error} onClose={() => setError('')} />}
 
             <Input
               label="Email"
