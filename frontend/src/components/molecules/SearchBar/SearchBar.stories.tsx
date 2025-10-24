@@ -54,7 +54,9 @@ export const WithSearchButton: Story = {
 export const WithPlaceholder: Story = {
   render: (args) => {
     const [value, setValue] = useState('');
-    return <SearchBar {...args} value={value} onChange={setValue} placeholder="Search for chefs..." />;
+    return (
+      <SearchBar {...args} value={value} onChange={setValue} placeholder="Search for chefs..." />
+    );
   },
   args: {
     value: '',

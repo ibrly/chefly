@@ -137,51 +137,54 @@ export const mockChefs = [
 export const mockBookings = [
   {
     id: '1',
+    clientId: 'user1',
     chefId: '1',
-    chef: mockChefs[0],
-    userId: 'user1',
-    date: new Date('2025-11-15').toISOString(),
+    chef: mockChefs[0] as any,
+    date: '2025-11-15',
     time: '19:00',
-    numberOfGuests: 6,
+    guests: 6,
     location: '123 Zamalek Street, Cairo',
     menuPreferences: 'Traditional Egyptian menu with Koshari, Molokhia, and grilled meats',
     specialRequests: 'One guest is vegetarian',
     totalPrice: 1500,
-    status: 'confirmed',
+    status: 'CONFIRMED',
+    paymentStatus: 'PAID',
     createdAt: new Date('2025-10-20').toISOString(),
-    paymentStatus: 'paid',
+    updatedAt: new Date('2025-10-20').toISOString(),
   },
   {
     id: '2',
+    clientId: 'user1',
     chefId: '2',
-    chef: mockChefs[1],
-    userId: 'user1',
-    date: new Date('2025-11-25').toISOString(),
+    chef: mockChefs[1] as any,
+    date: '2025-11-25',
     time: '18:30',
-    numberOfGuests: 4,
+    guests: 4,
     location: '456 Maadi Avenue, Cairo',
     menuPreferences: 'Mediterranean fusion with fresh seafood',
     specialRequests: 'Gluten-free options needed',
     totalPrice: 1200,
-    status: 'pending',
+    status: 'PENDING',
+    paymentStatus: 'PENDING',
     createdAt: new Date('2025-10-22').toISOString(),
-    paymentStatus: 'pending',
+    updatedAt: new Date('2025-10-22').toISOString(),
   },
   {
     id: '3',
+    clientId: 'user1',
     chefId: '3',
-    chef: mockChefs[2],
-    userId: 'user1',
-    date: new Date('2025-10-10').toISOString(),
+    chef: mockChefs[2] as any,
+    date: '2025-10-10',
     time: '20:00',
-    numberOfGuests: 8,
+    guests: 8,
     location: '789 Heliopolis Road, Cairo',
     menuPreferences: 'BBQ party with mixed grills',
     specialRequests: 'Outdoor setup preferred',
     totalPrice: 1600,
-    status: 'completed',
+    status: 'COMPLETED',
+    paymentStatus: 'PAID',
     createdAt: new Date('2025-09-15').toISOString(),
-    paymentStatus: 'paid',
+    updatedAt: new Date('2025-09-15').toISOString(),
   },
 ];
 
@@ -335,6 +338,11 @@ export const mockAPI = {
     const booking = mockBookings.find((b) => b.id === id);
     if (!booking) throw new Error('Booking not found');
     return booking;
+  },
+
+  getBookings: async () => {
+    await delay(400);
+    return mockBookings;
   },
 
   createBooking: async (data: any) => {

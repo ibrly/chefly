@@ -33,7 +33,7 @@ export async function createBooking(data: {
 
 export async function getMyBookings(): Promise<Booking[]> {
   if (USE_MOCK_DATA) {
-    return await mockAPI.getBookings();
+    return await mockAPI.getMyBookings();
   }
 
   const response = await axios.get('/bookings/my-bookings');
@@ -51,7 +51,7 @@ export async function getBookingById(id: string): Promise<Booking> {
 
 export async function updateBookingStatus(id: string, status: string): Promise<Booking> {
   if (USE_MOCK_DATA) {
-    const bookings = await mockAPI.getBookings();
+    const bookings = await mockAPI.getMyBookings();
     const booking = bookings.find((b) => b.id === id);
     if (!booking) throw new Error('Booking not found');
     return { ...booking, status: status as any };
@@ -63,7 +63,7 @@ export async function updateBookingStatus(id: string, status: string): Promise<B
 
 export async function cancelBooking(id: string): Promise<Booking> {
   if (USE_MOCK_DATA) {
-    const bookings = await mockAPI.getBookings();
+    const bookings = await mockAPI.getMyBookings();
     const booking = bookings.find((b) => b.id === id);
     if (!booking) throw new Error('Booking not found');
     return { ...booking, status: 'CANCELLED' };
