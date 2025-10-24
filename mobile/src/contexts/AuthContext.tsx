@@ -1,0 +1,110 @@
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { apiClient } from '@/services/api';
+
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: {
+    type: 'client' | 'chef' | 'admin';
+  };
+}
+
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string, username: string, role: string) => Promise<void>;
+  logout: () => Promise<void>;
+  updateUser: (user: User) => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  const loadUser = async () => {
+    try {
+      const token = await AsyncStorage.getItem('auth_token');
+      if (token) {
+        const response = await apiClient.get('/users/me');
+        setUser(response.data);
+      }
+    } catch (error) {
+      console.error('Failed to load user:', error);
+      await AsyncStorage.removeItem('auth_token');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await apiClient.post('/auth/local', {
+        identifier: email,
+        password,
+      });
+
+      const { jwt, user: userData } = response.data;
+      await AsyncStorage.setItem('auth_token', jwt);
+      setUser(userData);
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
+    }
+  };
+
+  const register = async (email: string, password: string, username: string, role: string) => {
+    try {
+      const response = await apiClient.post('/auth/local/register', {
+        email,
+        password,
+        username,
+        role,
+      });
+
+      const { jwt, user: userData } = response.data;
+      await AsyncStorage.setItem('auth_token', jwt);
+      setUser(userData);
+    } catch (error) {
+      console.error('Registration failed:', error);
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('auth_token');
+      setUser(null);
+    } catch (error) {
+      console.error('Logout failed:', error);
+      throw error;
+    }
+  };
+
+  const updateUser = (updatedUser: User) => {
+    setUser(updatedUser);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, loading, login, register, logout, updateUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+}
+
