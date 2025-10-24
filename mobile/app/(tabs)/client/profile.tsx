@@ -36,6 +36,11 @@ export default function ClientProfileScreen() {
           <List.Item
             title="Favorite Chefs"
             left={(props) => <List.Icon {...props} icon="heart" />}
+            onPress={() => router.push('/favorites')}
+          />
+          <List.Item
+            title="My Reviews"
+            left={(props) => <List.Icon {...props} icon="star" />}
             onPress={() => {}}
           />
           <List.Item
