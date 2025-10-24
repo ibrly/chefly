@@ -70,7 +70,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
   ],
   experiments: {
-    typedRoutes: true,
+    typedRoutes: false, // Temporarily disabled for faster development
   },
   extra: {
     router: {

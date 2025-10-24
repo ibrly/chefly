@@ -58,10 +58,10 @@ export function ResponsiveGrid({ children, columns = 2, gap = 16, style }: Respo
         {
           gap,
         },
-        isWeb && {
-          display: 'grid',
+        (isWeb && {
+          display: 'grid' as any,
           gridTemplateColumns: `repeat(auto-fill, minmax(${300}px, 1fr))`,
-        },
+        }) as any,
         style,
       ]}
     >
