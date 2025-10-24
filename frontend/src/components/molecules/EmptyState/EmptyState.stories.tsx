@@ -25,7 +25,7 @@ export const NoBookings: Story = {
   args: {
     icon: Calendar,
     title: 'No bookings yet',
-    description: 'You haven't made any bookings yet. Browse our chefs to get started!',
+    description: "You haven't made any bookings yet. Browse our chefs to get started!",
     actionLabel: 'Explore Chefs',
     onAction: () => alert('Navigate to explore page'),
   },
@@ -35,7 +35,7 @@ export const NoFavorites: Story = {
   args: {
     icon: Heart,
     title: 'No favorites',
-    description: 'You haven't added any chefs to your favorites yet.',
+    description: "You haven't added any chefs to your favorites yet.",
     actionLabel: 'Find Chefs',
     onAction: () => alert('Navigate to explore page'),
   },
@@ -45,7 +45,7 @@ export const NoMessages: Story = {
   args: {
     icon: MessageSquare,
     title: 'No messages',
-    description: 'You don't have any messages yet. Start a conversation with a chef!',
+    description: "You don't have any messages yet. Start a conversation with a chef!",
   },
 };
 
@@ -53,7 +53,7 @@ export const SearchNoResults: Story = {
   args: {
     icon: Search,
     title: 'No results found',
-    description: 'We couldn't find any chefs matching your search criteria. Try adjusting your filters.',
+    description: "We couldn't find any chefs matching your search criteria. Try adjusting your filters.",
     actionLabel: 'Clear Filters',
     onAction: () => alert('Clear filters'),
   },
