@@ -1,8 +1,8 @@
-import { Redirect, useRouter } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
-import { View, Text, ScrollView, StyleSheet, Pressable, Platform } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Redirect, useRouter } from 'expo-router';
 import React from 'react';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default function Index() {
   const { user, loading } = useAuth();
@@ -47,24 +47,22 @@ export default function Index() {
 
       {/* Hero Section */}
       <View style={styles.hero}>
-        <Text style={styles.heroTitle}>
-          Find Your Perfect Chef,{'\n'}Anytime, Anywhere
-        </Text>
+        <Text style={styles.heroTitle}>Find Your Perfect Chef,{'\n'}Anytime, Anywhere</Text>
         <Text style={styles.heroSubtitle}>
           Connect with professional chefs for your special events.{'\n'}
           From intimate dinners to large celebrations.
         </Text>
         <View style={styles.heroButtons}>
-          <Button 
-            mode="contained" 
+          <Button
+            mode="contained"
             style={styles.primaryButton}
             labelStyle={styles.primaryButtonText}
             onPress={() => router.push('/(auth)/register')}
           >
             Get Started
           </Button>
-          <Button 
-            mode="outlined" 
+          <Button
+            mode="outlined"
             style={styles.secondaryButton}
             onPress={() => router.push('/(auth)/register')}
           >
@@ -77,17 +75,17 @@ export default function Index() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>How It Works for Clients</Text>
         <View style={styles.features}>
-          <FeatureCard 
+          <FeatureCard
             icon="🔍"
             title="1. Browse Chefs"
             description="Explore profiles, menus, and reviews of professional chefs in your area"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="📅"
             title="2. Book & Customize"
             description="Select your date, guest count, and share your preferences"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="🎉"
             title="3. Enjoy Your Event"
             description="Sit back and let your chef create an unforgettable culinary experience"
@@ -99,17 +97,17 @@ export default function Index() {
       <View style={[styles.section, styles.sectionAlt]}>
         <Text style={styles.sectionTitle}>How It Works for Chefs</Text>
         <View style={styles.features}>
-          <FeatureCard 
+          <FeatureCard
             icon="📝"
             title="1. Create Your Profile"
             description="Showcase your skills, specialties, and portfolio"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="📲"
             title="2. Get Bookings"
             description="Receive requests from clients looking for your expertise"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="💰"
             title="3. Grow Your Business"
             description="Build your reputation and earn on your own terms"
@@ -121,22 +119,22 @@ export default function Index() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Why Choose Chefly?</Text>
         <View style={styles.features}>
-          <FeatureCard 
+          <FeatureCard
             icon="✅"
             title="Verified Chefs"
             description="All chefs are reviewed and approved by our team"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="💬"
             title="Real-time Chat"
             description="Message chefs directly to discuss your event details"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="🔒"
             title="Secure Payments"
             description="Safe and encrypted payment processing with Paymob"
           />
-          <FeatureCard 
+          <FeatureCard
             icon="⭐"
             title="Ratings & Reviews"
             description="Make informed decisions based on real client experiences"
@@ -150,8 +148,8 @@ export default function Index() {
         <Text style={styles.ctaSubtitle}>
           Join thousands of clients and chefs creating amazing experiences
         </Text>
-        <Button 
-          mode="contained" 
+        <Button
+          mode="contained"
           style={styles.ctaButton}
           labelStyle={styles.ctaButtonText}
           onPress={() => router.push('/(auth)/register')}
@@ -175,7 +173,15 @@ export default function Index() {
   );
 }
 
-function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: string;
+  title: string;
+  description: string;
+}) {
   return (
     <View style={styles.featureCard}>
       <Text style={styles.featureIcon}>{icon}</Text>
@@ -362,4 +368,3 @@ const styles = StyleSheet.create({
     color: '#ccc',
   },
 });
-

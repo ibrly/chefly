@@ -20,25 +20,33 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (user) {
-      // Connect socket when user is authenticated
-      socketService.connect();
+      try {
+        // Connect socket when user is authenticated
+        socketService.connect();
 
-      const handleConnect = () => setConnected(true);
-      const handleDisconnect = () => setConnected(false);
+        const handleConnect = () => setConnected(true);
+        const handleDisconnect = () => setConnected(false);
 
-      socketService.on('connect', handleConnect);
-      socketService.on('disconnect', handleDisconnect);
+        socketService.on('connect', handleConnect);
+        socketService.on('disconnect', handleDisconnect);
 
-      // Check initial connection state
-      setConnected(socketService.isConnected());
+        // Check initial connection state
+        setConnected(socketService.isConnected());
 
-      return () => {
-        socketService.off('connect', handleConnect);
-        socketService.off('disconnect', handleDisconnect);
-      };
+        return () => {
+          socketService.off('connect', handleConnect);
+          socketService.off('disconnect', handleDisconnect);
+        };
+      } catch (error) {
+        console.error('Failed to setup socket:', error);
+      }
     } else {
       // Disconnect socket when user logs out
-      socketService.disconnect();
+      try {
+        socketService.disconnect();
+      } catch (error) {
+        console.error('Failed to disconnect socket:', error);
+      }
       setConnected(false);
     }
   }, [user]);
