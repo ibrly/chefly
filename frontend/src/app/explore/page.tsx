@@ -1,8 +1,8 @@
 'use client';
 
 import { Button } from '@/components/atoms/Button';
-import { SearchBar } from '@/components/molecules/SearchBar';
 import { FilterPanel } from '@/components/molecules/FilterPanel';
+import { SearchBar } from '@/components/molecules/SearchBar';
 import { ChefGrid } from '@/components/organisms/ChefGrid';
 import { Navbar } from '@/components/organisms/Navbar';
 import { chefsService } from '@/services/chefs';

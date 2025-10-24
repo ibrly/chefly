@@ -1,15 +1,16 @@
 'use client';
 
-import { Badge } from '@/components/atoms/Badge';
 import { Button } from '@/components/atoms/Button';
 import { Spinner } from '@/components/atoms/Spinner';
+import { Tabs, Tab } from '@/components/atoms/Tabs';
 import { BookingCard } from '@/components/molecules/BookingCard';
 import { EmptyState } from '@/components/molecules/EmptyState';
+import { StatCard } from '@/components/molecules/StatCard';
 import { Navbar } from '@/components/organisms/Navbar';
 import { useAuth } from '@/contexts/AuthContext';
 import { bookingsService } from '@/services/bookings';
 import { Booking } from '@/types';
-import { Calendar } from 'lucide-react';
+import { Calendar, CheckCircle, Clock, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -61,20 +62,20 @@ export default function MyBookingsPage() {
     return true;
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'CONFIRMED':
-        return 'success';
-      case 'PENDING':
-        return 'warning';
-      case 'COMPLETED':
-        return 'info';
-      case 'CANCELLED':
-        return 'danger';
-      default:
-        return 'secondary';
-    }
-  };
+  const tabs: Tab[] = [
+    { key: 'all', label: 'All', count: bookings.length },
+    {
+      key: 'upcoming',
+      label: 'Upcoming',
+      count: bookings.filter((b) => b.status === 'CONFIRMED' || b.status === 'PENDING').length,
+    },
+    { key: 'past', label: 'Past', count: bookings.filter((b) => b.status === 'COMPLETED').length },
+    {
+      key: 'cancelled',
+      label: 'Cancelled',
+      count: bookings.filter((b) => b.status === 'CANCELLED').length,
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -90,26 +91,7 @@ export default function MyBookingsPage() {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex gap-2 mb-6 border-b border-gray-200 overflow-x-auto">
-          {[
-            { key: 'all' as const, label: 'All' },
-            { key: 'upcoming' as const, label: 'Upcoming' },
-            { key: 'past' as const, label: 'Past' },
-            { key: 'cancelled' as const, label: 'Cancelled' },
-          ].map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setFilter(tab.key)}
-              className={`px-4 py-2 font-medium transition-colors border-b-2 whitespace-nowrap ${
-                filter === tab.key
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
+        <Tabs tabs={tabs} activeTab={filter} onChange={(key) => setFilter(key as typeof filter)} className="mb-6" />
 
         {/* Bookings List */}
         {loading ? (
@@ -141,28 +123,30 @@ export default function MyBookingsPage() {
         {/* Stats */}
         {bookings.length > 0 && !loading && (
           <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <div className="text-2xl font-bold text-gray-900">{bookings.length}</div>
-              <div className="text-sm text-gray-600">Total Bookings</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <div className="text-2xl font-bold text-green-600">
-                {bookings.filter((b) => b.status === 'CONFIRMED').length}
-              </div>
-              <div className="text-sm text-gray-600">Confirmed</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <div className="text-2xl font-bold text-blue-600">
-                {bookings.filter((b) => b.status === 'COMPLETED').length}
-              </div>
-              <div className="text-sm text-gray-600">Completed</div>
-            </div>
-            <div className="bg-white p-4 rounded-lg border border-gray-200">
-              <div className="text-2xl font-bold text-yellow-600">
-                {bookings.filter((b) => b.status === 'PENDING').length}
-              </div>
-              <div className="text-sm text-gray-600">Pending</div>
-            </div>
+            <StatCard
+              value={bookings.length}
+              label="Total Bookings"
+              icon={Calendar}
+              valueColor="text-gray-900"
+            />
+            <StatCard
+              value={bookings.filter((b) => b.status === 'CONFIRMED').length}
+              label="Confirmed"
+              icon={CheckCircle}
+              valueColor="text-green-600"
+            />
+            <StatCard
+              value={bookings.filter((b) => b.status === 'COMPLETED').length}
+              label="Completed"
+              icon={TrendingUp}
+              valueColor="text-blue-600"
+            />
+            <StatCard
+              value={bookings.filter((b) => b.status === 'PENDING').length}
+              label="Pending"
+              icon={Clock}
+              valueColor="text-yellow-600"
+            />
           </div>
         )}
       </div>

@@ -8,6 +8,7 @@ export * from './atoms/Input';
 export * from './atoms/Modal';
 export * from './atoms/Select';
 export * from './atoms/Spinner';
+export * from './atoms/Tabs';
 export * from './atoms/Textarea';
 export * from './atoms/Toast';
 
@@ -17,8 +18,10 @@ export * from './molecules/ChefCard';
 export * from './molecules/EmptyState';
 export * from './molecules/FeatureCard';
 export * from './molecules/FilterPanel';
+export * from './molecules/NotificationItem';
 export * from './molecules/ReviewCard';
 export * from './molecules/SearchBar';
+export * from './molecules/StatCard';
 
 // Organisms
 export * from './organisms/BookingForm';

@@ -104,4 +104,3 @@ export const NoLabel: Story = {
     placeholder: 'Select cuisine',
   },
 };
-

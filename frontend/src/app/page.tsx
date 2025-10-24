@@ -3,9 +3,9 @@
 import { Button } from '@/components/atoms/Button';
 import { ChefCard } from '@/components/molecules/ChefCard';
 import { FeatureCard } from '@/components/molecules/FeatureCard';
-import { Navbar } from '@/components/organisms/Navbar';
-import { Hero } from '@/components/organisms/Hero';
 import { Footer } from '@/components/organisms/Footer';
+import { Hero } from '@/components/organisms/Hero';
+import { Navbar } from '@/components/organisms/Navbar';
 import { useAuth } from '@/contexts/AuthContext';
 import { chefsService } from '@/services/chefs';
 import { Chef } from '@/types';
