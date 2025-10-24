@@ -24,13 +24,16 @@
   "author": "Ebrahim Soliman",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^3.3.3",
     "eslint": "^9.14.0",
+    "prettier": "^3.3.3",
+    "prisma": "^6.18.0",
     "typescript": "^5.6.3"
   },
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.18.0"
   }
 }
-
