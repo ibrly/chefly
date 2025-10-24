@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@chefly/shared": "workspace:*",
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^6.18.0",
     "express": "^4.19.2",
     "socket.io": "^4.8.1",
     "jsonwebtoken": "^9.0.2",

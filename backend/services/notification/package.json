@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@chefly/shared": "workspace:*",
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^6.18.0",
     "express": "^4.19.2",
     "expo-server-sdk": "^3.11.0",
     "dotenv": "^16.4.5"

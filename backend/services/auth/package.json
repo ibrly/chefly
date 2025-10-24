@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@chefly/shared": "workspace:*",
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^6.18.0",
     "express": "^4.19.2",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
