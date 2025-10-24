@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper';
 
 export default function Index() {
   console.log('Index component started');
-  
+
   let user = null;
   let loading = true;
   let router: any = null;
@@ -52,7 +52,7 @@ export default function Index() {
   }
 
   console.log('Rendering landing page');
-  
+
   // Landing page for web
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
