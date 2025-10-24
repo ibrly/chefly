@@ -1,0 +1,279 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USER SERVICE MODELS
+// ============================================
+
+enum UserRole {
+  CLIENT
+  CHEF
+  ADMIN
+  SUPPORT
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+model User {
+  id            String      @id @default(uuid())
+  email         String      @unique
+  username      String      @unique
+  password      String?     // Null for OAuth users
+  role          UserRole    @default(CLIENT)
+  status        UserStatus  @default(ACTIVE)
+  firstName     String?
+  lastName      String?
+  phone         String?
+  avatar        String?
+  pushToken     String?
+  
+  // OAuth fields
+  googleId      String?     @unique
+  facebookId    String?     @unique
+  appleId       String?     @unique
+  
+  // Timestamps
+  emailVerified DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  lastLoginAt   DateTime?
+  
+  // Relations
+  chefProfile   ChefProfile?
+  bookingsAsClient Booking[]  @relation("ClientBookings")
+  bookingsAsChef   Booking[]  @relation("ChefBookings")
+  reviews       Review[]
+  sentMessages  Message[]   @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+  favorites     Favorite[]
+  refreshTokens RefreshToken[]
+  
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model ChefProfile {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  bio               String
+  cuisineTypes      String[]  // Array of cuisines
+  specialties       String[]
+  pricePerHour      Decimal   @db.Decimal(10, 2)
+  
+  rating            Decimal   @default(0) @db.Decimal(3, 2)
+  totalReviews      Int       @default(0)
+  
+  isAvailable       Boolean   @default(true)
+  isApproved        Boolean   @default(false)
+  approvedAt        DateTime?
+  approvedBy        String?   // Admin user ID
+  
+  location          Json?     // {lat, lng, address, city, country}
+  availability      Json?     // Weekly schedule
+  
+  profileImage      String?
+  portfolioImages   String[]
+  
+  yearsOfExperience Int?
+  certifications    Json?     // Array of {name, issuer, date}
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  bookings          Booking[] @relation("ChefBookings")
+  reviews           Review[]
+  favorites         Favorite[]
+  
+  @@index([userId])
+  @@index([isApproved, isAvailable])
+  @@map("chef_profiles")
+}
+
+// ============================================
+// BOOKING SERVICE MODELS
+// ============================================
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
+model Booking {
+  id              String         @id @default(uuid())
+  
+  clientId        String
+  client          User           @relation("ClientBookings", fields: [clientId], references: [id])
+  
+  chefId          String
+  chef            User           @relation("ChefBookings", fields: [chefId], references: [id])
+  chefProfile     ChefProfile    @relation("ChefBookings", fields: [chefId], references: [userId])
+  
+  eventDate       DateTime
+  eventDuration   Int            // in hours
+  eventLocation   Json           // {address, lat, lng, city}
+  guestCount      Int
+  specialRequests String?
+  
+  status          BookingStatus  @default(PENDING)
+  totalPrice      Decimal        @db.Decimal(10, 2)
+  
+  // Admin review fields
+  reviewedBy      String?        // Admin/Support user ID
+  reviewedAt      DateTime?
+  reviewNotes     String?
+  
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  
+  payment         Payment?
+  review          Review?
+  
+  @@index([clientId])
+  @@index([chefId])
+  @@index([status])
+  @@index([eventDate])
+  @@map("bookings")
+}
+
+// ============================================
+// PAYMENT SERVICE MODELS
+// ============================================
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model Payment {
+  id                    String        @id @default(uuid())
+  
+  bookingId             String        @unique
+  booking               Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  
+  amount                Decimal       @db.Decimal(10, 2)
+  status                PaymentStatus @default(PENDING)
+  paymentMethod         String        @default("paymob")
+  
+  paymobOrderId         String?
+  paymobTransactionId   String?       @unique
+  paymentDetails        Json?         // Full Paymob response
+  
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  completedAt           DateTime?
+  
+  @@index([bookingId])
+  @@index([status])
+  @@map("payments")
+}
+
+// ============================================
+// REVIEW SERVICE MODELS
+// ============================================
+
+model Review {
+  id          String   @id @default(uuid())
+  
+  bookingId   String   @unique
+  booking     Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  
+  clientId    String
+  client      User     @relation(fields: [clientId], references: [id])
+  
+  chefId      String
+  chef        ChefProfile @relation(fields: [chefId], references: [userId])
+  
+  rating      Int      // 1-5
+  comment     String?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([chefId])
+  @@index([clientId])
+  @@map("reviews")
+}
+
+// ============================================
+// CHAT SERVICE MODELS
+// ============================================
+
+model Message {
+  id          String   @id @default(uuid())
+  
+  senderId    String
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  
+  receiverId  String
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  
+  content     String
+  isRead      Boolean  @default(false)
+  readAt      DateTime?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([senderId, receiverId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+// ============================================
+// FAVORITE SERVICE MODELS
+// ============================================
+
+model Favorite {
+  id        String   @id @default(uuid())
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  chefId    String
+  chef      ChefProfile @relation(fields: [chefId], references: [userId], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, chefId])
+  @@index([userId])
+  @@map("favorites")
+}
+
+// ============================================
+// AUTH SERVICE MODELS
+// ============================================
+
+model RefreshToken {
+  id          String   @id @default(uuid())
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  token       String   @unique
+  expiresAt   DateTime
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+

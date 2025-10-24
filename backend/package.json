@@ -1,47 +1,37 @@
 {
-  "name": "backend",
-  "version": "0.1.0",
+  "name": "chefly-backend",
+  "version": "1.0.0",
+  "description": "Chefly Microservices Backend",
   "private": true,
-  "description": "A Strapi application",
+  "workspaces": [
+    "services/*",
+    "gateway",
+    "shared"
+  ],
   "scripts": {
-    "build": "strapi build",
-    "console": "strapi console",
-    "deploy": "strapi deploy",
-    "dev": "strapi develop",
-    "develop": "strapi develop",
-    "seed:example": "node ./scripts/seed.js",
-    "start": "strapi start",
-    "strapi": "strapi",
-    "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
-  },
-  "dependencies": {
-    "@strapi/plugin-cloud": "5.29.0",
-    "@strapi/plugin-users-permissions": "5.29.0",
-    "@strapi/strapi": "5.29.0",
-    "axios": "^1.12.2",
-    "expo-server-sdk": "^3.15.0",
-    "fs-extra": "^10.0.0",
-    "mime-types": "^2.1.27",
-    "pg": "8.8.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "socket.io": "^4.8.1",
-    "styled-components": "^6.0.0"
+    "dev": "concurrently \"pnpm:dev:*\"",
+    "dev:gateway": "pnpm --filter gateway dev",
+    "dev:auth": "pnpm --filter @chefly/auth dev",
+    "dev:user": "pnpm --filter @chefly/user dev",
+    "dev:booking": "pnpm --filter @chefly/booking dev",
+    "dev:chat": "pnpm --filter @chefly/chat dev",
+    "dev:payment": "pnpm --filter @chefly/payment dev",
+    "dev:notification": "pnpm --filter @chefly/notification dev",
+    "build": "pnpm -r build",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5"
+    "@types/node": "^20.14.0",
+    "concurrently": "^8.2.2",
+    "prisma": "^5.20.0",
+    "typescript": "^5.6.0"
   },
-  "engines": {
-    "node": ">=18.0.0 <=22.x.x",
-    "npm": ">=6.0.0"
-  },
-  "strapi": {
-    "uuid": "32936255-e1b0-41ab-975b-9de7f0a8daaa",
-    "installId": "15fbfd15a0b6c20f9e8b423988bd4c847d7f7b12a2ae5ac59990cbde68718e57"
+  "dependencies": {
+    "@prisma/client": "^5.20.0"
   }
 }
+
