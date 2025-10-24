@@ -1,12 +1,12 @@
-import { Stack } from 'expo-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { PaperProvider } from 'react-native-paper';
 import { AuthProvider } from '@/contexts/AuthContext';
-import { SocketProvider } from '@/contexts/SocketContext';
 import { NotificationProvider } from '@/contexts/NotificationContext';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SocketProvider } from '@/contexts/SocketContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Stack } from 'expo-router';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
+import { PaperProvider } from 'react-native-paper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,9 @@ class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>Something went wrong</Text>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 10 }}>
+            Something went wrong
+          </Text>
           <Text style={{ fontSize: 14, color: '#666', textAlign: 'center' }}>
             {this.state.error?.message || 'Unknown error'}
           </Text>
@@ -45,7 +47,7 @@ class ErrorBoundary extends React.Component<
 
 export default function RootLayout() {
   console.log('========== RootLayout loaded ==========');
-  
+
   return (
     <ErrorBoundary>
       <SafeAreaProvider>
@@ -73,4 +75,3 @@ export default function RootLayout() {
     </ErrorBoundary>
   );
 }
-

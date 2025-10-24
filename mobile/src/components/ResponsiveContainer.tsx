@@ -40,12 +40,6 @@ export function ResponsiveContainer({
   );
 }
 
-const containerStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
-
 /**
  * Responsive grid container
  */
