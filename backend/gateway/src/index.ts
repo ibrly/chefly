@@ -19,6 +19,24 @@ app.use(cors({
 app.use(morgan('dev'));
 app.use(express.json());
 
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Chefly API Gateway',
+    version: '1.0.0',
+    services: [
+      { name: 'Auth', path: '/auth', description: 'Authentication and user management' },
+      { name: 'Users', path: '/users', description: 'User profiles and chef management' },
+      { name: 'Bookings', path: '/bookings', description: 'Booking system' },
+      { name: 'Chat', path: '/chat', description: 'Real-time messaging' },
+      { name: 'Payments', path: '/payments', description: 'Payment processing' },
+      { name: 'Notifications', path: '/notifications', description: 'Push notifications' },
+    ],
+    docs: '/health',
+  });
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'gateway', timestamp: new Date().toISOString() });
