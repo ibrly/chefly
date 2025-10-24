@@ -122,8 +122,8 @@ model Booking {
   client          User           @relation("ClientBookings", fields: [clientId], references: [id])
   
   chefId          String
-  chef            User           @relation("ChefBookings", fields: [chefId], references: [id])
-  chefProfile     ChefProfile    @relation("ChefBookings", fields: [chefId], references: [userId])
+  chef            User           @relation("ChefBookings", fields: [chefId], references: [id], map: "booking_chef_fkey")
+  chefProfile     ChefProfile    @relation("ChefBookings", fields: [chefId], references: [userId], map: "booking_chef_profile_fkey")
   
   eventDate       DateTime
   eventDuration   Int            // in hours

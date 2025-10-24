@@ -3,4 +3,3 @@ packages:
   - 'backend/gateway'
   - 'backend/shared'
   - 'backend/services/*'
-
