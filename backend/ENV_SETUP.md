@@ -55,6 +55,7 @@ cp ENV_SETUP.md .env
 ## For Local Development
 
 1. **Start Docker services:**
+
    ```bash
    docker-compose up -d
    ```
@@ -62,16 +63,19 @@ cp ENV_SETUP.md .env
 2. **Create `.env` file** with the variables above
 
 3. **Generate Prisma Client:**
+
    ```bash
    pnpm prisma:generate
    ```
 
 4. **Run migrations:**
+
    ```bash
    pnpm prisma:migrate dev
    ```
 
 5. **Start all services:**
+
    ```bash
    pnpm dev
    ```
@@ -79,6 +83,7 @@ cp ENV_SETUP.md .env
 ## For CI/CD
 
 The GitHub Actions workflow sets these automatically:
+
 - `DATABASE_URL` → Test PostgreSQL database
 - `REDIS_URL` → Test Redis instance
 - `JWT_SECRET` → Test secrets
@@ -91,4 +96,3 @@ The GitHub Actions workflow sets these automatically:
 - Use real Paymob credentials
 - Set up OAuth app credentials
 - Use secure database passwords
-
