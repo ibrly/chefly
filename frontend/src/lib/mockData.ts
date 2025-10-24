@@ -7,7 +7,9 @@ export const mockChefs = [
     id: '1',
     name: 'Ahmed Hassan',
     email: 'ahmed@example.com',
+    role: 'CHEF' as const,
     specialty: 'Egyptian Cuisine',
+    specialties: ['Egyptian', 'Traditional', 'Middle Eastern'],
     bio: 'Master chef specializing in authentic Egyptian dishes with 15 years of experience. Expert in traditional recipes and modern fusion.',
     pricePerPerson: 250,
     rating: 4.8,
@@ -147,8 +149,8 @@ export const mockBookings = [
     menuPreferences: 'Traditional Egyptian menu with Koshari, Molokhia, and grilled meats',
     specialRequests: 'One guest is vegetarian',
     totalPrice: 1500,
-    status: 'CONFIRMED',
-    paymentStatus: 'PAID',
+    status: 'CONFIRMED' as const,
+    paymentStatus: 'PAID' as const,
     createdAt: new Date('2025-10-20').toISOString(),
     updatedAt: new Date('2025-10-20').toISOString(),
   },
@@ -164,8 +166,8 @@ export const mockBookings = [
     menuPreferences: 'Mediterranean fusion with fresh seafood',
     specialRequests: 'Gluten-free options needed',
     totalPrice: 1200,
-    status: 'PENDING',
-    paymentStatus: 'PENDING',
+    status: 'PENDING' as const,
+    paymentStatus: 'PENDING' as const,
     createdAt: new Date('2025-10-22').toISOString(),
     updatedAt: new Date('2025-10-22').toISOString(),
   },
@@ -181,8 +183,8 @@ export const mockBookings = [
     menuPreferences: 'BBQ party with mixed grills',
     specialRequests: 'Outdoor setup preferred',
     totalPrice: 1600,
-    status: 'COMPLETED',
-    paymentStatus: 'PAID',
+    status: 'COMPLETED' as const,
+    paymentStatus: 'PAID' as const,
     createdAt: new Date('2025-09-15').toISOString(),
     updatedAt: new Date('2025-09-15').toISOString(),
   },
@@ -317,7 +319,10 @@ export const mockAPI = {
       filtered = filtered.filter((chef) => chef.pricePerPerson <= params.maxPrice);
     }
     
-    return filtered;
+    return {
+      data: filtered,
+      total: filtered.length,
+    };
   },
   
   getChefById: async (id: string) => {
