@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bookings",
+  "info": {
+    "singularName": "booking",
+    "pluralName": "bookings",
+    "displayName": "Booking",
+    "description": "Chef booking with dates and status"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "client": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "chef": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chef-profile.chef-profile",
+      "inversedBy": "bookings"
+    },
+    "eventDate": {
+      "type": "datetime",
+      "required": true
+    },
+    "eventDuration": {
+      "type": "integer",
+      "required": true
+    },
+    "eventLocation": {
+      "type": "json",
+      "required": true
+    },
+    "guestCount": {
+      "type": "integer",
+      "required": true
+    },
+    "specialRequests": {
+      "type": "text"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "confirmed", "cancelled", "completed"],
+      "default": "pending",
+      "required": true
+    },
+    "totalPrice": {
+      "type": "decimal",
+      "required": true
+    },
+    "payment": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::payment.payment"
+    },
+    "review": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::review.review"
+    }
+  }
+}
+

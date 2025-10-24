@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "payments",
+  "info": {
+    "singularName": "payment",
+    "pluralName": "payments",
+    "displayName": "Payment",
+    "description": "Payment transactions"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "booking": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::booking.booking"
+    },
+    "amount": {
+      "type": "decimal",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "completed", "failed", "refunded"],
+      "default": "pending",
+      "required": true
+    },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "paymobTransactionId": {
+      "type": "string"
+    },
+    "paymentDetails": {
+      "type": "json"
+    }
+  }
+}
+

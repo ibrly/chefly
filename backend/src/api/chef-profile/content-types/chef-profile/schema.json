@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chef_profiles",
+  "info": {
+    "singularName": "chef-profile",
+    "pluralName": "chef-profiles",
+    "displayName": "Chef Profile",
+    "description": "Chef profiles with skills, pricing, and availability"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "bio": {
+      "type": "text",
+      "required": true
+    },
+    "cuisineTypes": {
+      "type": "json",
+      "required": true
+    },
+    "specialties": {
+      "type": "json"
+    },
+    "pricePerHour": {
+      "type": "decimal",
+      "required": true
+    },
+    "rating": {
+      "type": "decimal",
+      "default": 0,
+      "min": 0,
+      "max": 5
+    },
+    "totalReviews": {
+      "type": "integer",
+      "default": 0
+    },
+    "isAvailable": {
+      "type": "boolean",
+      "default": true
+    },
+    "isApproved": {
+      "type": "boolean",
+      "default": false
+    },
+    "location": {
+      "type": "json"
+    },
+    "availability": {
+      "type": "json"
+    },
+    "profileImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "portfolioImages": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "yearsOfExperience": {
+      "type": "integer"
+    },
+    "certifications": {
+      "type": "json"
+    },
+    "bookings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::booking.booking",
+      "mappedBy": "chef"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "chef"
+    }
+  }
+}
+
