@@ -35,7 +35,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
   },
   web: {
-    favicon: './assets/favicon.png',
+    // favicon: './assets/favicon.png', // TODO: Add favicon image
     bundler: 'metro',
     // Web-specific config for better responsive support
     build: {
@@ -46,7 +46,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // Meta tags for better SEO and responsive design
     meta: {
       viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
-      themeColor: '#6200EE',
+      themeColor: '#FF6B35',
       description: 'Chefly - Find and book professional chefs for your events',
     },
   },
