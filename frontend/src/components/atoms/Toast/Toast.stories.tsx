@@ -52,7 +52,7 @@ export const Warning: Story = {
 };
 
 export const Interactive: Story = {
-  render: () => {
+  render: (args) => {
     const [toasts, setToasts] = useState<ToastProps[]>([]);
 
     const addToast = (type: ToastProps['type']) => {
@@ -95,10 +95,16 @@ export const Interactive: Story = {
       </div>
     );
   },
+  args: {
+    id: 'interactive',
+    message: 'Interactive',
+    type: 'info',
+    onClose: () => {},
+  },
 };
 
 export const MultipleToasts: Story = {
-  render: () => {
+  render: (args) => {
     const [toasts, setToasts] = useState<ToastProps[]>([
       {
         id: '1',
@@ -121,6 +127,12 @@ export const MultipleToasts: Story = {
     ]);
 
     return <ToastContainer toasts={toasts} position="top-right" />;
+  },
+  args: {
+    id: 'multiple',
+    message: 'Multiple',
+    type: 'info',
+    onClose: () => {},
   },
 };
 

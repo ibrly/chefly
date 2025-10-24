@@ -78,8 +78,10 @@ export interface Review {
 export interface Notification {
   id: string;
   userId: string;
+  type: 'booking' | 'message' | 'review' | 'system';
   title: string;
-  body: string;
+  message: string;
+  body?: string;
   data?: any;
   read: boolean;
   createdAt: string;

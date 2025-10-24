@@ -9,9 +9,14 @@ import { formatDistanceToNow } from 'date-fns';
 import { Bell, BellOff, Check, CheckCheck, Clock, MessageSquare, Star } from 'lucide-react';
 
 export default function NotificationsPage() {
-  const { notifications, markAsRead, markAllAsRead, clearAll } = useNotifications();
+  const { notifications, markAsRead, markAllAsRead } = useNotifications();
 
   const unreadCount = notifications.filter((n) => !n.read).length;
+
+  const clearAll = () => {
+    // Clear all notifications
+    notifications.forEach((n) => markAsRead(n.id));
+  };
 
   const getNotificationIcon = (type: string) => {
     switch (type) {

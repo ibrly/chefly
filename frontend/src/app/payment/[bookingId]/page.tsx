@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 export default function PaymentPage() {
   const params = useParams();
   const router = useRouter();
-  const { showToast } = useToast();
+  const { success, error: showError } = useToast();
   const bookingId = params.bookingId as string;
 
   const [booking, setBooking] = useState<any>(null);
@@ -35,8 +35,8 @@ export default function PaymentPage() {
     try {
       const data = await getBookingById(bookingId);
       setBooking(data);
-    } catch (error) {
-      showToast('Failed to load booking details', 'error');
+    } catch (err) {
+      showError('Failed to load booking details');
       router.push('/my-bookings');
     } finally {
       setLoading(false);
@@ -47,7 +47,7 @@ export default function PaymentPage() {
     e.preventDefault();
 
     if (!cardNumber || !expiryDate || !cvv || !cardholderName) {
-      showToast('Please fill in all payment details', 'error');
+      showError('Please fill in all payment details');
       return;
     }
 
@@ -67,10 +67,10 @@ export default function PaymentPage() {
         },
       });
 
-      showToast('Payment successful!', 'success');
+      success('Payment successful!');
       router.push(`/my-bookings`);
-    } catch (error: any) {
-      showToast(error.message || 'Payment failed. Please try again.', 'error');
+    } catch (err: any) {
+      showError(err.message || 'Payment failed. Please try again.');
     } finally {
       setProcessing(false);
     }
