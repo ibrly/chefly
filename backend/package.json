@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "Chefly Microservices Backend",
   "private": true,
-  "workspaces": [
-    "services/*",
-    "gateway",
-    "shared"
-  ],
   "scripts": {
     "dev": "concurrently \"pnpm:dev:*\"",
     "dev:gateway": "pnpm --filter gateway dev",
