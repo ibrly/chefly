@@ -1,13 +1,12 @@
 'use client';
 
-import { useNotifications } from '@/contexts/NotificationContext';
-import { formatDistanceToNow } from 'date-fns';
-import { Bell, BellOff, Check, CheckCheck, Clock, MessageSquare, Star, User } from 'lucide-react';
-import { useEffect } from 'react';
 import { Badge } from '@/components/atoms/Badge';
 import { Button } from '@/components/atoms/Button';
 import { Card } from '@/components/atoms/Card';
 import { EmptyState } from '@/components/molecules/EmptyState';
+import { useNotifications } from '@/contexts/NotificationContext';
+import { formatDistanceToNow } from 'date-fns';
+import { Bell, BellOff, Check, CheckCheck, Clock, MessageSquare, Star } from 'lucide-react';
 
 export default function NotificationsPage() {
   const { notifications, markAsRead, markAllAsRead, clearAll } = useNotifications();
@@ -132,4 +131,3 @@ export default function NotificationsPage() {
     </div>
   );
 }
-
