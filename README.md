@@ -6,7 +6,7 @@ A full-stack chef booking platform connecting professional chefs with clients fo
 
 ### Frontend
 
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: 27 Atomic Design components
