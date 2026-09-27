@@ -4,15 +4,15 @@
   "description": "Chef marketplace platform - connecting chefs with clients",
   "private": true,
   "scripts": {
-    "dev": "pnpm --filter mobile dev & pnpm --filter backend develop",
-    "dev:mobile": "pnpm --filter mobile dev",
-    "dev:backend": "pnpm --filter backend develop",
-    "build": "pnpm --filter mobile build && pnpm --filter backend build",
+    "dev": "concurrently \"pnpm:dev:frontend\" \"pnpm:dev:backend\"",
+    "dev:frontend": "pnpm --filter frontend dev",
+    "dev:backend": "pnpm --dir backend dev",
+    "build": "pnpm --filter frontend build && pnpm --dir backend build",
     "lint": "pnpm -r lint",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "test": "pnpm -r test",
-    "test:e2e": "pnpm --filter mobile test:e2e"
+    "storybook": "pnpm --filter frontend storybook"
   },
   "keywords": [
     "chef",
