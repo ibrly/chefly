@@ -1,5 +1,5 @@
 packages:
-  - 'mobile'
+  - 'frontend'
   - 'backend/gateway'
   - 'backend/shared'
   - 'backend/services/*'
