@@ -28,7 +28,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build backend
-        run: pnpm --filter chefly-backend build
+        run: pnpm --dir backend build
 
       - name: Create deployment package
         run: |
