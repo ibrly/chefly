@@ -61,13 +61,30 @@ services.forEach(({ path, target }) => {
       pathRewrite: {
         [`^${path}`]: '',
       },
-      onError: (err, req, res) => {
-        console.error(`Proxy error for ${path}:`, err.message);
-        res.status(503).json({
-          success: false,
-          error: 'Service temporarily unavailable',
-          service: path,
-        });
+      // http-proxy-middleware v3 moved onError to on.error; res can also be a
+      // Socket (WebSocket upgrades), which can't carry a JSON response
+      on: {
+        error: (err, req, res) => {
+          // a refused localhost connection is an AggregateError with an empty message
+          console.error(
+            `Proxy error for ${path}:`,
+            err.message || (err as NodeJS.ErrnoException).code
+          );
+          if (!('writeHead' in res)) {
+            res.destroy();
+            return;
+          }
+          if (!res.headersSent) {
+            res.writeHead(503, { 'Content-Type': 'application/json' });
+          }
+          res.end(
+            JSON.stringify({
+              success: false,
+              error: 'Service temporarily unavailable',
+              service: path,
+            })
+          );
+        },
       },
     })
   );
