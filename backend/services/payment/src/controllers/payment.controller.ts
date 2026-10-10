@@ -185,6 +185,13 @@ export const handleWebhook = async (req: Request, res: Response) => {
 
     const payment = payments[0];
     const newStatus = transactionData.success ? 'COMPLETED' : 'FAILED';
+    // paymentDetails is a nullable JSON column; only merge it when it holds an object
+    const previousDetails =
+      payment.paymentDetails &&
+      typeof payment.paymentDetails === 'object' &&
+      !Array.isArray(payment.paymentDetails)
+        ? payment.paymentDetails
+        : {};
 
     // Update payment
     await prisma.payment.update({
@@ -193,7 +200,7 @@ export const handleWebhook = async (req: Request, res: Response) => {
         status: newStatus,
         paymobTransactionId: String(transactionData.id),
         paymentDetails: {
-          ...payment.paymentDetails,
+          ...previousDetails,
           transactionData,
           webhookReceivedAt: new Date().toISOString(),
         },
