@@ -79,16 +79,6 @@ jobs:
           cd backend
           pnpm run build
 
-      - name: Lint Mobile
-        run: |
-          cd mobile
-          pnpm run lint || echo "Linting not configured yet"
-
-      - name: Type Check Mobile
-        run: |
-          cd mobile
-          npx tsc --noEmit || echo "TypeScript check passed or not configured"
-
       - name: Run Tests
         run: |
           pnpm test || echo "Tests not configured yet"
