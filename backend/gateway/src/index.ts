@@ -4,8 +4,9 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import dotenv from 'dotenv';
+import path from 'path';
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') }); // backend/.env, from src/ or dist/
 
 const app = express();
 const PORT = process.env.PORT_GATEWAY || 3000;
