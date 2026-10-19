@@ -29,10 +29,11 @@ class PaymobService {
         api_key: this.apiKey,
       });
 
-      this.authToken = response.data.token;
+      const token: string = response.data.token;
+      this.authToken = token;
       this.tokenExpiry = Date.now() + 50 * 60 * 1000; // 50 minutes
 
-      return this.authToken;
+      return token;
     } catch (error: any) {
       console.error('Paymob authentication error:', error.response?.data || error.message);
       throw new Error('Failed to authenticate with Paymob');
