@@ -2,10 +2,11 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import dotenv from 'dotenv';
+import path from 'path';
 import chatRoutes from './routes/chat.routes';
 import { initializeSocketServer } from './socket';
 
-dotenv.config({ path: '../../../.env' });
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') }); // backend/.env, from src/ or dist/
 
 const app = express();
 const httpServer = createServer(app);
